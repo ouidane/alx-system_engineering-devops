@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# Install Nginx, configure to listen on port 80 and return a hello world
+
+sudo apt-get update -y -qq && \
+	sudo apt-get install nginx -y
+sudo service nginx start 
+sudo chown -R "$USER":"$USER" /var/www/html
+sudo chmod -R 755 /var/www
+echo "Hello World!" >> /var/www/html/index.html
+sudo service nginx restart
