@@ -14,5 +14,4 @@ if [ "$?" -eq 0 ]; then
     echo "File successfully transferred to ${$3}@${$2}:~/"
 else
     echo "File transfer failed!"
-    exit 1
 fi
