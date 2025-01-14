@@ -32,4 +32,4 @@ sudo sed -i "50i\	add_header X-Served-By $hostname"
 # restarting nginx service
 sudo service nginx restart
 
-echo -e "\nCompleted.\n"o
+echo -e "\nCompleted.\n"
