@@ -1,9 +1,7 @@
 #!/usr/bin/env bash
-# Configures a new ubuntu machine by installing
-# Nginx where it should be listening on port 80
-# Serve a page that would return a Hello World string
-#
-
+# Script to configure a new Ubuntu machine
+# with Nginx to serve a "Hello World" page
+# and set up a redirection and custom header
 
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
@@ -11,10 +9,8 @@ sudo apt-get update -y -qq && \
 
 echo -e "\nSetting up some minor stuff.\n"
 
-# starting nginx service
+# starting nginx service and allowing on firewall
 sudo service nginx start
-
-# allowing nginx on firewall
 sudo ufw allow 'Nginx HTTP'
 
 # Give the user ownership to website files for easy editing
@@ -24,17 +20,16 @@ sudo chmod -R 755 /var/www
 # Backup default index
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Creating new index
+# Creating a new index
 echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 
-# Setting up /redirect_me to a youtube video
+# Setting up a redirection
 sudo sed -i '24i\       rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
-# customizing header
+# Setting up a custom header
 sudo sed -i "50i\	add_header X-Served-By $hostname"
 
-# Restarting nginx
+# restarting nginx service
 sudo service nginx restart
 
 echo -e "\nCompleted.\n"o
-
