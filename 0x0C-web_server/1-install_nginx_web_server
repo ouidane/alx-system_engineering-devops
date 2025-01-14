@@ -7,7 +7,7 @@ sudo apt-get update -y -qq && \
     sudo apt-get install nginx -y
 
 # Start the Nginx service
-sudo service nginx start 
+sudo service nginx start
 
 # Grant user ownership of website files for editing
 sudo chown -R "$USER":"$USER" /var/www/html
