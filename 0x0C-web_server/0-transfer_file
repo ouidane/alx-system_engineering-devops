@@ -18,13 +18,11 @@ if [ ! -f "$FILE_PATH" ]; then
     exit 1
 fi
 
-# Use scp to transfer the file to the remote server
-scp -o StrictHostKeyChecking=no -i "$SSH_KEY_PATH" "$FILE_PATH" "$USERNAME@$SERVER_IP:~"
-
-# Check if scp was successful
-if [ $? -eq 0 ]; then
-    echo "File successfully transferred to $USERNAME@$SERVER_IP:~/"
-else
-    echo "File transfer failed!"
+# Check if the SSH key exists
+if [ ! -f "$SSH_KEY_PATH" ]; then
+    echo "Error: SSH key '$SSH_KEY_PATH' does not exist."
     exit 1
 fi
+
+# Use scp to transfer the file to the remote server, disabling strict host key checking
+scp -o StrictHostKeyChecking=no -i "$SSH_KEY_PATH" "$FILE_PATH" "$USERNAME@$SERVER_IP:~/"
