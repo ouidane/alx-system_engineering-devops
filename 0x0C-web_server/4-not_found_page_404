@@ -1,33 +1,35 @@
 #!/usr/bin/env bash
-# Installs Nginx, creates a simple Hello World page
-# and configures the 404 page to show a message
+# Installs Nginx, creates a simple Hello World page,
+# and configures a custom 404 page to show a message
 
 echo -e "Updating and installing Nginx.\n"
 sudo apt-get update -y -qq && \
-	 sudo apt-get install nginx -y
+    sudo apt-get install -y nginx
 
-echo -e "\nSetting up some minor stuff.\n"
+echo -e "\nSetting up some minor configurations.\n"
 
-# starting nginx service and allowing on firewall
+# Starting the Nginx service and allowing Nginx on the firewall
 sudo service nginx start
 sudo ufw allow 'Nginx HTTP'
 
-# Give the user ownership to website files for easy editing
+# Giving the user ownership of the website files for easy editing
 sudo chown -R "$USER":"$USER" /var/www/html
 sudo chmod -R 755 /var/www
 
-# Backup default index
+# Backing up the default index page
 cp /var/www/html/index.nginx-debian.html /var/www/html/index.nginx-debian.html.bckp
 
-# Creating a new index
+# Creating a new index page
 echo -e "Hello World!" > /var/www/html/index.nginx-debian.html
 
-# Setting up a redirection
-sudo sed -i '24i\	rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
+# Setting up a redirection for /redirect_me
+sudo sed -i '24i\    rewrite ^/redirect_me https://www.youtube.com/watch?v=QH2-TGUlwu4 permanent;' /etc/nginx/sites-available/default
 
-# Setting up a custom header
-echo "Ceci n'est pas une page" >> /var/www/html/error_404.html
-sudo sed -i '25i\	error_page 404 /error_404.html;' /etc/nginx/sites-available/default
+# Setting up a custom 404 page with a new line
+echo -e "Ceci n'est pas une page\n" | sudo tee /var/www/html/error_404.html
+
+# Configuring Nginx to use the custom 404 page
+sudo sed -i '25i\    error_page 404 /error_404.html;' /etc/nginx/sites-available/default
 
 # Restarting Nginx to apply changes
 sudo service nginx restart
