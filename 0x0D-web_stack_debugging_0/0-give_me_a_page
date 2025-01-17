@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # Fix the issue in answer file.
 # make the apache server return Hello ALX
-sudo apt-get update
-sudo apt-get install -y apache2
 echo "Hello ALX" > /var/www/html/index.html
-sudo service apache2 start
+service apache2 start
