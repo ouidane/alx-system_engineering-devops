@@ -1,4 +1,5 @@
-# Creating a custom HTTP header response.
+# Setup New Ubuntu server with nginx
+# and add a custom HTTP header response.
 
 exec { 'exec_0':
   command => 'sudo sudo apt-get update -y',
