@@ -1,6 +1,6 @@
-# fixing apache 500 error
+# Fixes bad `phpp` extensions to `php` in the WordPress file `wp-settings.php`.
 
-exec { 'Fixing 500 error':
-  command  => 'sudo sed -i "s/.phpp/.php/" /var/www/html/wp-settings.php',
-  provider => shell,
+exec { 'fix-wordpress':
+  command => 'sed -i s/phpp/php/g /var/www/html/wp-settings.php',
+  path    => '/usr/local/bin/:/bin/'
 }
